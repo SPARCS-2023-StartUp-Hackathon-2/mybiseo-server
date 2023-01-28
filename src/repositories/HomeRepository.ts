@@ -5,15 +5,34 @@ import { Schedule } from "../entities/Schedule";
 
 @Service()
 export class HomeRepository extends Repository<Schedule> {
-  public async getSchedule(body: any) {
+  public async getSchedule(query: any) {
     return MysqlDataSource.createQueryBuilder(Schedule, "schedule")
       .select(["schedule.date", "schedule.content"])
-      .where("schedule.id = :id", { id: body.id })
-      .andWhere("schedule.date = :date", { date: body.date })
+      .where("schedule.userId = :userId", { userId: query.userId })
+      .andWhere("schedule.date = :date", { date: query.date })
       .getOne();
   }
 
-  public async createSchedule(body: any) {
+  public async getSchedules(limit: number) {
+    return MysqlDataSource.createQueryBuilder(Schedule, "schedule")
+      .select(["schedule.date", "schedule.content"])
+      .orderBy("schedule.date", "DESC")
+      .limit(limit);
+  }
+
+  public async createSchedule(body: any, content: string) {
+    return MysqlDataSource.createQueryBuilder(Schedule, "schedule")
+      .insert()
+      .into(Schedule)
+      .values({
+        userId: body.userId,
+        date: body.date,
+        content: content,
+      })
+      .execute();
+  }
+
+  public async createMockSchedule(body: any) {
     return MysqlDataSource.createQueryBuilder(Schedule, "schedule")
       .insert()
       .into(Schedule)
