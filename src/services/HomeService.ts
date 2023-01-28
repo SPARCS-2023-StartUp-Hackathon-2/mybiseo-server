@@ -1,6 +1,6 @@
 import { Inject, Service } from "typedi";
 import { HomeRepository } from "../repositories/HomeRepository";
-
+import { ScheduleAlgorithm } from "../utils/Biseo";
 @Service()
 export class HomeService {
   @Inject()
@@ -14,10 +14,8 @@ export class HomeService {
   // 실제로 쓸 거
   public async createSchedule(body: any) {
     const schedules = await this.homeRepository.getSchedules(7);
-    console.log(schedules);
 
-    // 이 아래 로직 작성해서 생성된 content를 createSchedule에 넘겨.
-    let content = "";
+    const content = ScheduleAlgorithm(schedules, 1);
 
     const result = await this.homeRepository.createSchedule(body, content);
     return result;

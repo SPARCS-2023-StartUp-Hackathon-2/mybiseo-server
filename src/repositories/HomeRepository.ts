@@ -17,7 +17,8 @@ export class HomeRepository extends Repository<Schedule> {
     return MysqlDataSource.createQueryBuilder(Schedule, "schedule")
       .select(["schedule.date", "schedule.content"])
       .orderBy("schedule.date", "DESC")
-      .limit(limit);
+      .limit(limit)
+      .getMany();
   }
 
   public async createSchedule(body: any, content: string) {

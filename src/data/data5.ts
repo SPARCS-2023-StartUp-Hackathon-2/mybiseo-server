@@ -1,5 +1,6 @@
 export const data5 = {
   date: "2023-01-26",
+  day_of_week: "목",
   schedule: [
     {
       title: "empty",

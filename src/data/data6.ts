@@ -1,5 +1,6 @@
 export const data6 = {
   date: "2023-01-27",
+  day_of_week: "금",
   schedule: [
     {
       title: "잠",

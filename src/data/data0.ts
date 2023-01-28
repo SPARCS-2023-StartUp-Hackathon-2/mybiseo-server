@@ -8,12 +8,6 @@ export const data0 = {
       endTime: "06:30:00",
     },
     {
-      title: "empty",
-      category: "empty",
-      startTime: "06:30:00",
-      endTime: "07:30:00",
-    },
-    {
       title: "아침",
       category: "meal",
       startTime: "07:30:00",

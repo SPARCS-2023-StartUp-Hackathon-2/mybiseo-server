@@ -1,5 +1,6 @@
 export const data3 = {
   date: "2023-01-24",
+  day_of_week: "화",
   schedule: [
     {
       title: "empty",
