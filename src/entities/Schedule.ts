@@ -17,6 +17,6 @@ export class Schedule {
   date: Date;
 
   @IsNotEmpty()
-  @Column()
+  @Column("varchar", { length: 10000 })
   content: string;
 }

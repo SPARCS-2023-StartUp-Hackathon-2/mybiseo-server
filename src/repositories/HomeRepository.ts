@@ -43,4 +43,13 @@ export class HomeRepository extends Repository<Schedule> {
       })
       .execute();
   }
+
+  public async deleteSchedule(body: any) {
+    return MysqlDataSource.createQueryBuilder(Schedule, "schedule")
+      .delete()
+      .from(Schedule)
+      .where("schedule.userId = :userId", { userId: body.userId })
+      .andWhere("schedule.date = :date", { date: body.date })
+      .execute();
+  }
 }

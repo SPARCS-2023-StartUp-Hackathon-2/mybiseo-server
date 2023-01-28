@@ -11,6 +11,7 @@ export class HomeService {
     return tests;
   }
 
+  // 실제로 쓸 거
   public async createSchedule(body: any) {
     const schedules = await this.homeRepository.getSchedules(7);
     console.log(schedules);
@@ -22,8 +23,16 @@ export class HomeService {
     return result;
   }
 
+  // 개발 시 필요
   public async createMockSchedule(body: any) {
     const result = await this.homeRepository.createMockSchedule(body);
+
+    return result;
+  }
+
+  public async deleteSchedule(body: any) {
+    const result = await this.homeRepository.deleteSchedule(body);
+
     return result;
   }
 }
