@@ -10,22 +10,53 @@ import {
 
 const FillEmpty = (result) => {
   let beforeTime = "00:00:00";
-  let newResult = result;
-  let count = 0;
+  let emptyArray = [];
   const leng = result.schedule.length;
 
-  for (let i = 0; i < leng; i++) {
+  for (let i = 0; i < result.schedule.length; i++) {
     if (result.schedule[i].startTime !== beforeTime) {
-      newResult.schedule.splice(i + count, 0, {
+      emptyArray.push({
         title: "empty",
         category: "empty",
         startTime: beforeTime,
         endTime: result.schedule[i].startTime,
       });
-
-      count++;
     }
     beforeTime = result.schedule[i].endTime;
+  }
+
+  if (result.schedule[leng - 1].endTime !== "24:00:00") {
+    emptyArray.push({
+      title: "empty",
+      category: "empty",
+      startTime: result.schedule[leng - 1].endTime,
+      endTime: "24:00:00",
+    });
+  }
+
+  let newResult = {
+    schedule: [],
+  };
+  let i = 0;
+  let j = 0;
+  while (i < result.schedule.length && j < emptyArray.length) {
+    if (
+      StringToMinute(result.schedule[i].startTime) <
+      StringToMinute(emptyArray[j].startTime)
+    ) {
+      newResult.schedule.push(result.schedule[i]);
+      console.log(result.schedule[i]);
+      i++;
+    } else {
+      console.log(emptyArray[j]);
+      newResult.schedule.push(emptyArray[j]);
+      j++;
+    }
+  }
+  if (i !== result.schedule.length) {
+    newResult.schedule.push(result.schedule[result.schedule.length - 1]);
+  } else {
+    newResult.schedule.push(emptyArray[emptyArray.length - 1]);
   }
 
   return newResult;
@@ -205,8 +236,9 @@ const ScheduleAlgorithm = (schedules, degree) => {
   result = WorkoutUnitAlgorithm(specialDateSchedule, result, Bads);
 
   // 5. 빈 부분 채우기
+  console.log(result);
   result = FillEmpty(result);
-
+  console.log(result);
   return JSON.stringify(result);
 };
 
