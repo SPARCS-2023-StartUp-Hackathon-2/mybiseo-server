@@ -210,6 +210,24 @@ const WorkoutUnitAlgorithm = (specialDateSchedule, result, Bads) => {
   }
 };
 
+const EtcUnitAlgorithm = (specialDateSchedule, result, Bads) => {
+  result.schedule.splice(4, 0, {
+    title: "오후 업무",
+    category: "etc",
+    startTime: "14:00:00",
+    endTime: "17:00:00",
+  });
+
+  result.schedule.push({
+    title: "유튜브 시청",
+    category: "etc",
+    startTime: "21:30:00",
+    endTime: "23:00:00",
+  });
+
+  return result;
+};
+
 const ScheduleAlgorithm = (schedules, degree) => {
   // 1. schedules의 content to json
   let jsonSchedules = schedules.map((schedule) => {
@@ -235,10 +253,11 @@ const ScheduleAlgorithm = (schedules, degree) => {
   // 4-3. 운동 유닛 배치
   result = WorkoutUnitAlgorithm(specialDateSchedule, result, Bads);
 
+  // 4-4. 기타 유닛 배치
+  result = EtcUnitAlgorithm(specialDateSchedule, result, Bads);
+
   // 5. 빈 부분 채우기
-  console.log(result);
   result = FillEmpty(result);
-  console.log(result);
   return JSON.stringify(result);
 };
 
